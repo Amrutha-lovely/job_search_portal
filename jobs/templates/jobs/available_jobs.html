@@ -1,0 +1,108 @@
+{% extends 'jobs/base.html' %}
+{% load static %}
+
+{% block title %}Available Job Opportunities{% endblock %}
+
+{% block content %}
+<style>
+    /* Available Jobs Page Styling */
+    .available-jobs-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .available-jobs-container h2 {
+        text-align: center;
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .job-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .job-item {
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f4f6f9;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .job-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-title {
+        font-size: 1.5em;
+        color: #27158f;
+        margin-bottom: 10px;
+    }
+
+    .job-item p {
+        margin: 5px 0;
+        color: #333;
+    }
+
+    .apply-button {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #27158f;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .apply-button:hover {
+        background-color: #1f126f;
+    }
+
+    .job-divider {
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 20px 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .available-jobs-container {
+            padding: 15px;
+        }
+
+        .job-title {
+            font-size: 1.3em;
+        }
+
+        .apply-button {
+            padding: 6px 12px;
+        }
+    }
+</style>
+
+<main class="available-jobs-container">
+    <h2>Available Job Opportunities</h2>
+    <div class="job-list">
+        {% for job in jobs %}
+            <div class="job-item">
+                <h3 class="job-title">{{ job.title }}</h3>
+                <p><strong>Company:</strong> {{ job.company }}</p>
+                <p><strong>Description:</strong> {{ job.description }}</p>
+                <p><strong>Salary:</strong> {{ job.salary }}</p>
+                <p><strong>Skills Required:</strong> {{ job.skills }}</p>
+               <br> <a href="{% url 'apply' job.id %}" class="apply-button">Apply</a>
+            </div>
+            {% if not forloop.last %}<hr class="job-divider">{% endif %}
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

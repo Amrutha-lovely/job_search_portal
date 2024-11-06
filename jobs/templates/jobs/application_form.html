@@ -1,0 +1,313 @@
+<!-- jobs/templates/jobs/application_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <title>Application Form</title>
+    <script>
+        function toggleExperienceFields() {
+            const experienceFields = document.getElementById('experience_fields');
+            const experienceYes = document.getElementById('experience_yes');
+            // Show fields if 'Yes' is selected, otherwise hide
+            experienceFields.style.display = experienceYes.checked ? 'block' : 'none';
+        }
+    </script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #27158f;
+            margin-bottom: 20px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #082e53;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .website-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Styles */
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            border: 1px solid #27158f;
+            border-radius: 8px;
+            padding: 50px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+
+        legend {
+            font-size: 1.5em;
+            color: #27158f;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        .form-group1 {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            padding: 0px 450px 0px 0px;
+        }
+
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-large {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+        .input-large:focus {
+            border-color: #27158f;
+            outline: none;
+        }
+
+        .save-button, .submit-button {
+            background-color: #27158f;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .save-button:hover, .submit-button:hover {
+            background-color: #1f126f;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+            }
+
+            .input-large {
+                font-size: 0.9em;
+            }
+
+            .save-button, .submit-button {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+   <!-- Navbar -->
+   <div class="navbar">
+        <div class="logo-container">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            <h1 class="website-name">Job Searching Portal</h1>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'available_jobs' %}">Available Jobs</a>
+            <a href="{% url 'contact' %}">Contact Info</a>
+            
+        </div>
+    </div>
+
+    <main>
+        <h2>Application Form</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Personal Details -->
+            <fieldset class="personal-details">
+                <legend>Personal Details</legend>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="current_address">Current Address:</label>
+                    <input type="text" id="current_address" name="current_address" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="permanent_address">Permanent Address:</label>
+                    <input type="text" id="permanent_address" name="permanent_address" class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required class="input-large">
+                </div>
+                <div class="form-group1">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required class="input-large">    
+                </div>
+                <div class="form-group1">
+                    <label for="country">Country:</label>
+                    <select id="country" name="country" required class="input-large">
+                        <option value="India">India</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <div>
+                        <input type="radio" id="male" name="gender" value="male"> Male
+                        <input type="radio" id="female" name="gender" value="female"> Female
+                    </div>
+                </div>
+            </fieldset>
+            
+            <!-- Educational Details -->
+            <fieldset class="educational-details">
+                <legend>Educational Details</legend>
+                <div class="form-group">
+                    <label for="highest_graduation">Highest Graduation:</label>
+                    <input type="text" id="highest_graduation" name="highest_graduation" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="institution">Institution:</label>
+                    <input type="text" id="institution" name="institution" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="year_of_passing">Year of Passing:</label>
+                    <input type="number" id="year_of_passing" name="year_of_passing" required class="input-large">
+                </div>
+                <div class="form-group">
+                    <label for="percentage">Percentage:</label>
+                    <input type="text" id="percentage" name="percentage" required class="input-large">
+                </div>
+            </fieldset>
+
+            <!-- Experience Details -->
+            <fieldset class="experience-details">
+                <legend>Experience</legend>
+                <div>
+                    <label for="experience">Experience:</label>
+                    <input type="radio" id="experience_yes" name="experience" value="yes" onclick="toggleExperienceFields()"> Yes
+                    <input type="radio" id="experience_no" name="experience" value="no" onclick="toggleExperienceFields()"> No
+                </div>
+               <br> <div id="experience_fields" style="display: none;" class="form-group">
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" id="company_name" name="company_name" class="input-large">
+                    <label for="designation">Designation:</label>
+                    <input type="text" id="designation" name="designation" class="input-large">
+                    <label for="years_of_experience">Years of Experience:</label>
+                    <input type="text" id="years_of_experience" name="years_of_experience" class="input-large">
+                    <label for="job_description">Job Description:</label>
+                    <textarea id="job_description" name="job_description" class="input-large"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Additional Details -->
+            <fieldset class="additional-details">
+                <legend>Additional Details</legend>
+                <div class="form-group1">
+                    <label for="preferred_location">Preferred Location:</label>
+                    <select id="preferred_location" name="preferred_location" multiple class="input-large">
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Mumbai">Chennai</option>
+                        <option value="Chennai">Bangloore</option>
+
+
+                        
+                    </select>
+                </div>
+                <div >
+                    <label for="willing_to_relocate">Willing to Relocate:</label>
+                    <input type="radio" id="relocate_yes" name="willing_to_relocate" value="yes"> Yes
+                    <input type="radio" id="relocate_no" name="willing_to_relocate" value="no"> No
+                </div>
+              <br>  <div class="form-group1">
+                    <label for="date_of_application">Date of Application:</label>
+                    <input type="date" id="date_of_application" name="date_of_application" required class="input-large">
+                </div>
+                <div>
+                    <input type="checkbox" id="declaration" name="declaration" required>
+                    <label for="declaration">I declare that the information provided is true and accurate.</label>
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button type="button" class="save-button">Save Details</button>
+               <br> <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
